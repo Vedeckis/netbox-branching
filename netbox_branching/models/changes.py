@@ -163,6 +163,10 @@ class ChangeDiff(models.Model):
         Record any conflicting changes between the modified and current object data.
         """
         conflicts = None
+        if not self.original:
+            self.conflicts = None
+            return
+            
         if self.action == ObjectChangeActionChoices.ACTION_UPDATE:
             conflicts = [
                 k for k, v in self.original.items()
